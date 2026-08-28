@@ -2,6 +2,9 @@
 
 import { useState } from 'react'
 
+import { ChevronDownIcon } from '@/shared/components/icons/chevron-down-icon'
+import { CreditCardIcon } from '@/shared/components/icons/credit-card-icon'
+import { PixIcon } from '@/shared/components/icons/pix-icon'
 import { Badge } from '@/shared/components/ui/badge'
 import { Button } from '@/shared/components/ui/button'
 import { FieldError } from '@/shared/components/ui/field-error'
@@ -14,6 +17,11 @@ export default function Home() {
 
 	return (
 		<main className="mx-auto flex w-full max-w-md flex-1 flex-col gap-6 p-6">
+			<div className="flex items-center gap-3">
+				<PixIcon aria-hidden />
+				<CreditCardIcon aria-hidden />
+				<ChevronDownIcon aria-hidden />
+			</div>
 			<Badge>Recomendado</Badge>
 			<FieldLabel as="span">Rótulo avulso</FieldLabel>
 			<FieldError id="preview-error" message="Informe um CPF válido." />
