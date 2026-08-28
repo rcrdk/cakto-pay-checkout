@@ -1,7 +1,18 @@
-import { Button } from '@/shared/components/ui/button'
+import { useFormContext } from 'react-hook-form'
 
-const SUBMIT_LABEL = 'Finalizar compra'
+import { Button } from '@/shared/components/ui/button'
+import type { CheckoutFormSchema } from '../schemas/checkout-form-schema'
 
 export function CheckoutSubmit() {
-	return <Button>{SUBMIT_LABEL}</Button>
+	const {
+		formState: { isSubmitting },
+	} = useFormContext<CheckoutFormSchema>()
+
+	const label = isSubmitting ? 'Finalizando compra...' : 'Finalizar compra'
+
+	return (
+		<Button type="submit" loading={isSubmitting}>
+			{label}
+		</Button>
+	)
 }

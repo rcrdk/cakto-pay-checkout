@@ -1,4 +1,6 @@
-import type { PaymentMethod } from '../constants/payment-methods'
+import { useFormContext, useWatch } from 'react-hook-form'
+
+import type { CheckoutFormSchema } from '../schemas/checkout-form-schema'
 import { calculateCheckoutAmounts } from '../services/calculate-checkout-amounts'
 import { formatBrlFromCents } from '../utils/format-brl-from-cents'
 import { PixSavingsBanner } from './pix-savings-banner'
@@ -6,16 +8,15 @@ import { SummaryRow } from './summary-row'
 
 interface CheckoutSummaryProps {
 	priceCents: number
-	method: PaymentMethod
-	installments: number
 }
 
-export function CheckoutSummary({ priceCents, method, installments }: Readonly<CheckoutSummaryProps>) {
-	const amounts = calculateCheckoutAmounts({
-		priceCents,
-		method,
-		installments,
-	})
+export function CheckoutSummary({ priceCents }: Readonly<CheckoutSummaryProps>) {
+	const { control } = useFormContext<CheckoutFormSchema>()
+
+	const method = useWatch({ control, name: 'method' })
+	const installments = useWatch({ control, name: 'installments' })
+
+	const amounts = calculateCheckoutAmounts({ priceCents, method, installments })
 
 	const productValue = formatBrlFromCents(amounts.buyerTotalCents)
 	const buyerTotal = formatBrlFromCents(amounts.buyerTotalCents)

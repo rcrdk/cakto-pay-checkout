@@ -1,17 +1,23 @@
+import { useFormContext, useWatch } from 'react-hook-form'
+
 import { CreditCardIcon } from '@/shared/components/icons/credit-card-icon'
 import { PixIcon } from '@/shared/components/icons/pix-icon'
 import { FieldLabel } from '@/shared/components/ui/field-label'
+import { MIN_INSTALLMENTS } from '../constants/fee-rates'
 import type { PaymentMethod } from '../constants/payment-methods'
+import type { CheckoutFormSchema } from '../schemas/checkout-form-schema'
 import { PaymentMethodOption } from './payment-method-option'
 
-interface PaymentMethodSelectorProps {
-	method: PaymentMethod
-	onMethodChange: (method: PaymentMethod) => void
-}
-
-export function PaymentMethodSelector({ method, onMethodChange }: Readonly<PaymentMethodSelectorProps>) {
+export function PaymentMethodSelector() {
+	const { control, setValue } = useFormContext<CheckoutFormSchema>()
+	const method = useWatch({ control, name: 'method' })
 	const isPixSelected = method === 'pix'
 	const isCardSelected = method === 'card'
+
+	const handleMethodChange = (nextMethod: PaymentMethod) => {
+		setValue('method', nextMethod, { shouldDirty: true })
+		if (nextMethod === 'pix') setValue('installments', MIN_INSTALLMENTS)
+	}
 
 	return (
 		<fieldset className="flex flex-col gap-2 border-0 p-0">
@@ -25,7 +31,7 @@ export function PaymentMethodSelector({ method, onMethodChange }: Readonly<Payme
 					description="Aprovação imediata e taxa zero para o produtor."
 					Icon={PixIcon}
 					selected={isPixSelected}
-					onClick={() => onMethodChange('pix')}
+					onClick={() => handleMethodChange('pix')}
 					variant="highlighted"
 					badge="Recomendado"
 				/>
@@ -35,7 +41,7 @@ export function PaymentMethodSelector({ method, onMethodChange }: Readonly<Payme
 					description="Parcele em até 12x. O total do comprador continua o mesmo."
 					Icon={CreditCardIcon}
 					selected={isCardSelected}
-					onClick={() => onMethodChange('card')}
+					onClick={() => handleMethodChange('card')}
 				/>
 			</div>
 		</fieldset>

@@ -1,14 +1,13 @@
+import { useFormContext, useWatch } from 'react-hook-form'
+
 import { SelectField } from '@/shared/components/ui/select-field'
-import type { PaymentMethod } from '../constants/payment-methods'
+import type { CheckoutFormSchema } from '../schemas/checkout-form-schema'
 import { listCardInstallmentOptions } from '../services/list-card-installment-options'
 import type { CheckoutAmounts } from '../types/checkout'
 import { formatBrlFromCents } from '../utils/format-brl-from-cents'
 
 interface InstallmentSelectProps {
 	priceCents: number
-	method: PaymentMethod
-	installments: number
-	onInstallmentsChange: (installments: number) => void
 }
 
 interface InstallmentOptionProps {
@@ -23,18 +22,17 @@ function InstallmentOption({ installments, amounts }: Readonly<InstallmentOption
 	return <option value={installments}>{label}</option>
 }
 
-export function InstallmentSelect({
-	priceCents,
-	method,
-	installments,
-	onInstallmentsChange,
-}: Readonly<InstallmentSelectProps>) {
+export function InstallmentSelect({ priceCents }: Readonly<InstallmentSelectProps>) {
+	const { control, setValue } = useFormContext<CheckoutFormSchema>()
+
+	const method = useWatch({ control, name: 'method' })
+	const installments = useWatch({ control, name: 'installments' })
+
 	const options = listCardInstallmentOptions(priceCents)
 	const isCard = method === 'card'
 
 	const handleInstallmentsChange = (value: string) => {
-		const nextInstallments = Number(value)
-		onInstallmentsChange(nextInstallments)
+		setValue('installments', Number(value), { shouldDirty: true })
 	}
 
 	if (!isCard) return null
