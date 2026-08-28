@@ -18,3 +18,23 @@ body {
 	color: var(--color-foreground);
 	font-family: var(--font-sans), system-ui, sans-serif;
 }
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+	caret-color: var(--color-foreground);
+	-webkit-text-fill-color: var(--color-foreground);
+	background-color: var(--color-surface);
+	box-shadow: 0 0 0 1000px var(--color-surface) inset;
+	transition: background-color 99999s ease-out 0s;
+}
+
+input:-webkit-autofill:focus,
+input:-webkit-autofill:focus-visible {
+	border-color: var(--color-foreground);
+	box-shadow:
+		0 0 0 1000px var(--color-surface) inset,
+		var(--shadow-sm),
+		0 0 0 2px color-mix(in srgb, var(--color-foreground) 20%, transparent);
+}
