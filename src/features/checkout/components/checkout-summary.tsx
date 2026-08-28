@@ -4,18 +4,17 @@ import { formatBrlFromCents } from '../utils/format-brl-from-cents'
 import { PixSavingsBanner } from './pix-savings-banner'
 import { SummaryRow } from './summary-row'
 
-const MOCK_METHOD: PaymentMethod = 'card'
-const MOCK_INSTALLMENTS = 2
-
 interface CheckoutSummaryProps {
 	priceCents: number
+	method: PaymentMethod
+	installments: number
 }
 
-export function CheckoutSummary({ priceCents }: Readonly<CheckoutSummaryProps>) {
+export function CheckoutSummary({ priceCents, method, installments }: Readonly<CheckoutSummaryProps>) {
 	const amounts = calculateCheckoutAmounts({
 		priceCents,
-		method: MOCK_METHOD,
-		installments: MOCK_INSTALLMENTS,
+		method,
+		installments,
 	})
 
 	const productValue = formatBrlFromCents(amounts.buyerTotalCents)
@@ -27,7 +26,7 @@ export function CheckoutSummary({ priceCents }: Readonly<CheckoutSummaryProps>) 
 
 	const installmentValue = `${amounts.installmentCount}x de ${installmentAmount}`
 
-	const isCard = MOCK_METHOD === 'card'
+	const isCard = method === 'card'
 
 	const showPixSavings = isCard && amounts.pixSavingsCents > 0
 	const showInstallments = isCard && amounts.installmentCount > 1
