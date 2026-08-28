@@ -1,3 +1,5 @@
+export type PaymentMethod = 'pix' | 'card'
+
 export type ProductMock = {
 	id: number
 	name: string
