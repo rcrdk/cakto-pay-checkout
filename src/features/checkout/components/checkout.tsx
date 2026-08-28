@@ -1,4 +1,6 @@
 import type { Product } from '../types/checkout'
+import { CheckoutSubmit } from './checkout-submit'
+import { CheckoutSummary } from './checkout-summary'
 import { ProductHeader } from './product-header'
 
 interface CheckoutProps {
@@ -13,7 +15,10 @@ export function Checkout({ product }: Readonly<CheckoutProps>) {
 
 				<div className="flex flex-col gap-6">{product.name}</div>
 
-				<div className="flex flex-col gap-6">{product.name}</div>
+				<div className="flex flex-col gap-6">
+					<CheckoutSummary priceCents={product.currentPriceCents} />
+					<CheckoutSubmit />
+				</div>
 			</div>
 		</main>
 	)
