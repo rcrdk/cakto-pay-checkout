@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useRef, useState, type FormEvent } from 'react'
+import { useEffect, useRef, type FormEvent } from 'react'
+import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
 
@@ -10,7 +11,6 @@ import { getFirstInvalidFieldId } from '../utils/get-first-invalid-field-id'
 import { revealInvalidField } from '../utils/reveal-invalid-field'
 import { CheckoutFormFields } from './checkout-form-fields'
 import { CheckoutSubmit } from './checkout-submit'
-import { CheckoutSuccess } from './checkout-success'
 import { CheckoutSummary } from './checkout-summary'
 import { InstallmentSelect } from './installment-select'
 import { PaymentMethodSelector } from './payment-method-selector'
@@ -21,10 +21,10 @@ interface CheckoutProps {
 }
 
 const SUBMIT_DELAY_MS = 1200
+const SUCCESS_PATH = '/sucesso'
 
 export function Checkout({ product }: Readonly<CheckoutProps>) {
-	const [isSuccess, setIsSuccess] = useState(false)
-
+	const router = useRouter()
 	const submitTimeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined)
 
 	const form = useForm<CheckoutFormSchema>({
@@ -40,7 +40,7 @@ export function Checkout({ product }: Readonly<CheckoutProps>) {
 				await new Promise<void>((resolve) => {
 					clearTimeout(submitTimeoutRef.current)
 					submitTimeoutRef.current = setTimeout(() => {
-						setIsSuccess(true)
+						router.push(SUCCESS_PATH)
 						resolve()
 					}, SUBMIT_DELAY_MS)
 				})
@@ -55,13 +55,6 @@ export function Checkout({ product }: Readonly<CheckoutProps>) {
 	}
 
 	useEffect(() => () => clearTimeout(submitTimeoutRef.current), [])
-
-	if (isSuccess)
-		return (
-			<main className="mx-auto flex w-full max-w-md flex-col px-4 py-8">
-				<CheckoutSuccess product={product} />
-			</main>
-		)
 
 	return (
 		<main className="mx-auto flex w-full max-w-md flex-col px-4 py-8 lg:max-w-4xl">
