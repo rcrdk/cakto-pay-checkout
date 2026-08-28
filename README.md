@@ -2,7 +2,8 @@
 
 Checkout de infoproduto com cálculo de taxas em tempo real, formulário de pagamento e resumo do repasse do produtor.
 
-PR: *aguardando publicação do repositório.*
+- PR: [https://github.com/rcrdk/cakto-pay-checkout/pull/2](https://github.com/rcrdk/cakto-pay-checkout/pull/2)
+- Deploy: [https://cakto-pay-checkout-git-feature-checkout-rcrdk-dev.vercel.app/](https://cakto-pay-checkout-git-feature-checkout-rcrdk-dev.vercel.app/)
 
 ## Decisões Técnicas
 
@@ -47,6 +48,8 @@ npm run format
 ```
 
 > Lint e format rodam no pre-commit (arquivos staged). Typecheck e testes rodam no pre-push.
+
+
 
 ## Resposta Bônus
 
