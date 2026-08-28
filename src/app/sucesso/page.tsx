@@ -1,6 +1,4 @@
-'use client'
-
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 import { getCheckoutProduct } from '@/features/checkout/services/get-checkout-product'
 import { formatBrlFromCents } from '@/features/checkout/utils/format-brl-from-cents'
@@ -9,7 +7,6 @@ import { Button } from '@/shared/components/ui/button'
 const CHECKOUT_PATH = '/'
 
 export default function SuccessPage() {
-	const router = useRouter()
 	const product = getCheckoutProduct()
 	const paidAmount = formatBrlFromCents(product.currentPriceCents)
 
@@ -24,7 +21,7 @@ export default function SuccessPage() {
 					<p className="text-muted text-sm">Cobramos {paidAmount}. O material digital está disponível imediatamente.</p>
 				</div>
 
-				<Button variant="muted" onClick={() => router.push(CHECKOUT_PATH)}>
+				<Button as={Link} href={CHECKOUT_PATH} variant="muted">
 					Voltar ao checkout
 				</Button>
 			</section>
