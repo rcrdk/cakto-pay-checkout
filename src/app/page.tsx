@@ -3,6 +3,7 @@
 import { useState } from 'react'
 
 import { Badge } from '@/shared/components/ui/badge'
+import { Button } from '@/shared/components/ui/button'
 import { FieldError } from '@/shared/components/ui/field-error'
 import { FieldLabel } from '@/shared/components/ui/field-label'
 import { TextField } from '@/shared/components/ui/text-field'
@@ -26,6 +27,9 @@ export default function Home() {
 				placeholder="000.000.000-00"
 				error="Informe um CPF válido."
 			/>
+			<Button>Pagar com PIX</Button>
+			<Button disabled>Desabilitado</Button>
+			<Button loading>A processar</Button>
 		</main>
 	)
 }
