@@ -19,3 +19,12 @@ export type Product = {
 	format: string
 	deliveryTime: string
 }
+
+export type CheckoutAmounts = {
+	buyerTotalCents: number
+	platformFeeCents: number
+	producerNetCents: number
+	pixSavingsCents: number
+	installmentCount: number
+	installmentAmountCents: number
+}
