@@ -1,5 +1,6 @@
 import { BASIS_POINTS_DIVISOR, PIX_FEE_BPS } from '../constants/fee-rates'
-import type { CheckoutAmounts, PaymentMethod } from '../types/checkout'
+import type { PaymentMethod } from '../constants/payment-methods'
+import type { CheckoutAmounts } from '../types/checkout'
 import { getProducerFeeBps } from './get-producer-fee-bps'
 
 type CalculateCheckoutAmountsParams = {

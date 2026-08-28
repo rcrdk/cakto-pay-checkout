@@ -4,7 +4,7 @@ import {
 	EXTRA_INSTALLMENT_FEE_BPS,
 	PIX_FEE_BPS,
 } from '../constants/fee-rates'
-import type { PaymentMethod } from '../types/checkout'
+import type { PaymentMethod } from '../constants/payment-methods'
 
 type GetProducerFeeBpsParams = {
 	method: PaymentMethod
