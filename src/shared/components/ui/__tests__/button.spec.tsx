@@ -53,4 +53,9 @@ describe('Button component', () => {
 		renderButton({ loading: true })
 		expect(screen.getByRole('button', { name: LABEL })).toHaveClass('cursor-wait')
 	})
+
+	it('should apply the muted background when "variant" is "muted"', () => {
+		renderButton({ variant: 'muted' })
+		expect(screen.getByRole('button', { name: LABEL })).toHaveClass('bg-muted')
+	})
 })
